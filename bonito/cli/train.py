@@ -32,6 +32,7 @@ def main(args):
     init(args.seed, args.device, (not args.nondeterministic))
     device = torch.device(args.device)
 
+    print(f'Running on device: {device}')
     print("[loading data]")
     try:
         train_loader_kwargs, valid_loader_kwargs = load_numpy(
