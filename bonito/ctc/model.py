@@ -6,7 +6,7 @@ import numpy as np
 from bonito.nn import Permute, layers
 import torch
 from torch.nn.functional import log_softmax, ctc_loss
-from torch.nn import Module, ModuleList, Sequential, Conv1d, BatchNorm1d, Dropout
+from torch.nn import Module, ModuleList, Sequential, Conv1d, BatchNorm1d, Dropout, Identity
 
 from fast_ctc_decode import beam_search, viterbi_search
 
@@ -125,11 +125,12 @@ class Block(Module):
     """
     TCSConv, Batch Normalisation, Activation, Dropout
     """
-    def __init__(self, in_channels, out_channels, activation, repeat=5, kernel_size=1, stride=1, dilation=1, dropout=0.0, residual=False, separable=False):
+    def __init__(self, in_channels, out_channels, activation, repeat=5, kernel_size=1, stride=1, dilation=1, dropout=0.0, residual=False, separable=False, short_residual=False):
 
         super(Block, self).__init__()
 
         self.use_res = residual
+        self.use_short_res = short_residual
         self.conv = ModuleList()
 
         _in_channels = in_channels
@@ -162,6 +163,9 @@ class Block(Module):
         if self.use_res:
             self.residual = Sequential(*self.get_tcs(in_channels, out_channels))
 
+        if self.use_short_res:
+            self.short_residual = Identity()
+
         # add the activation and dropout
         self.activation = Sequential(*self.get_activation(activation, dropout))
 
@@ -186,7 +190,17 @@ class Block(Module):
     def forward(self, x):
         _x = x
         for layer in self.conv:
-            _x = layer(_x)
+            # TODO: Clean up
+            if self.use_short_res:
+                x_in = _x
+                _x = layer(_x)
+                # if we need to account for different number of input and output channels, project through 1x1 conv
+                if x_in.shape != _x.shape: 
+                    _x = _x + self.residual(x_in)
+                else:
+                    _x = _x + self.short_residual(x_in)
+            else:
+                _x = layer(_x)
         if self.use_res:
             _x = _x + self.residual(x)
         return self.activation(_x)

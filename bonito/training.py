@@ -115,7 +115,7 @@ class Trainer:
 
         return losses, grad_norm
 
-    def train_one_epoch(self, loss_log, lr_scheduler):
+    def train_one_epoch(self, loss_log, lr_scheduler, testing=False):
         t0 = perf_counter()
         chunks = 0
         self.model.train()
@@ -152,6 +152,8 @@ class Trainer:
                     })
 
                 if lr_scheduler is not None: lr_scheduler.step()
+                if testing: # Only train for one batch
+                    break
 
         return smoothed_loss, perf_counter() - t0
 
@@ -191,7 +193,7 @@ class Trainer:
     def get_lr_scheduler(self, epochs, last_epoch=0):
         return self.lr_scheduler_fn(self.optimizer, self.train_loader, epochs, last_epoch)
 
-    def fit(self, workdir, epochs=1, lr=2e-3, **optim_kwargs):
+    def fit(self, workdir, epochs=1, lr=2e-3, testing=False, **optim_kwargs):
         if self.optimizer is None:
             self.init_optimizer(lr, **optim_kwargs)
 
@@ -207,7 +209,7 @@ class Trainer:
         for epoch in range(1 + last_epoch, epochs + 1 + last_epoch):
             try:
                 with bonito.io.CSVLogger(os.path.join(workdir, 'losses_{}.csv'.format(epoch))) as loss_log:
-                    train_loss, duration = self.train_one_epoch(loss_log, lr_scheduler)
+                    train_loss, duration = self.train_one_epoch(loss_log, lr_scheduler, testing)
 
                 model_state = self.model.module.state_dict() if hasattr(self.model, 'module') else self.model.state_dict()
                 torch.save(model_state, os.path.join(workdir, "weights_%s.tar" % epoch))

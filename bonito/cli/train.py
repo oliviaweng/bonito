@@ -95,7 +95,7 @@ def main(args):
         lr = [float(x) for x in args.lr.split(',')]
     else:
         lr = float(args.lr)
-    trainer.fit(workdir, args.epochs, lr)
+    trainer.fit(workdir, args.epochs, lr, args.testing)
 
 def argparser():
     parser = ArgumentParser(
@@ -120,4 +120,5 @@ def argparser():
     parser.add_argument("--nondeterministic", action="store_true", default=False)
     parser.add_argument("--save-optim-every", default=10, type=int)
     parser.add_argument("--grad-accum-split", default=1, type=int)
+    parser.add_argument("--testing", action="store_true", default=False)
     return parser
