@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dna-qnet
+spec:
+  template:
+    spec:
+      containers:
+      - name: gpu-container
+        image: gitlab-registry.nrp-nautilus.io/prp/jupyter-stack/prp:latest
+        command: ["sleep", "infinity"]
+        # command: ["/bin/bash", "-c"]
+        # args:
+        #   -
+        #     cd /dna-volume/bonito;
+        #     source venv3/bin/activate;
+        #     pip install --upgrade pip;
+        #     pip install -r requirements.txt;
+        #     python setup.py develop;
+        #     bonito download --training
+        volumeMounts:
+        - mountPath: /dna-volume
+          name: dna-volume
+        resources:
+          limits:
+            memory: 56Gi
+            cpu: "6"
+            nvidia.com/gpu: "1"
+          requests:
+            memory: 50Gi
+            cpu: "1"
+            nvidia.com/gpu: "1"    
+      volumes:
+        - name: dna-volume
+          persistentVolumeClaim:
+            claimName: dna-volume
+      restartPolicy: Never
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: gpu-type
+                operator: In
+                values:
+                - TITANRTX
+
+  backoffLimit: 2

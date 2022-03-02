@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: int-pod
+spec:
+  containers:
+  - name: int-container
+    image: gitlab-registry.nrp-nautilus.io/prp/jupyter-stack/prp
+    command: ["sleep", "infinity"]
+    volumeMounts:
+    - mountPath: /dna-volume
+      name: dna-volume
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+        memory: 12Gi
+  volumes:
+    - name: dna-volume
+      persistentVolumeClaim:
+        claimName: dna-volume
