@@ -1,0 +1,285 @@
+Model(
+  (encoder): Encoder(
+    (encoder): Sequential(
+      (0): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (conv): Conv1d(1, 256, kernel_size=(33,), stride=(3,), padding=(16,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (1): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Dropout(p=0.0, inplace=False)
+          (4): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (5): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (6): ReLU()
+          (7): Dropout(p=0.0, inplace=False)
+          (8): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (9): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (10): ReLU()
+          (11): Dropout(p=0.0, inplace=False)
+          (12): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (13): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (14): ReLU()
+          (15): Dropout(p=0.0, inplace=False)
+          (16): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (17): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (2): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Dropout(p=0.0, inplace=False)
+          (4): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (5): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (6): ReLU()
+          (7): Dropout(p=0.0, inplace=False)
+          (8): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (9): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (10): ReLU()
+          (11): Dropout(p=0.0, inplace=False)
+          (12): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (13): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (14): ReLU()
+          (15): Dropout(p=0.0, inplace=False)
+          (16): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (17): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (3): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (depthwise): Conv1d(256, 256, kernel_size=(51,), stride=(1,), padding=(25,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Dropout(p=0.0, inplace=False)
+          (4): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (5): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (6): ReLU()
+          (7): Dropout(p=0.0, inplace=False)
+          (8): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (9): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (10): ReLU()
+          (11): Dropout(p=0.0, inplace=False)
+          (12): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (13): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (14): ReLU()
+          (15): Dropout(p=0.0, inplace=False)
+          (16): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (17): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(256, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (4): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Dropout(p=0.0, inplace=False)
+          (4): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (5): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (6): ReLU()
+          (7): Dropout(p=0.0, inplace=False)
+          (8): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (9): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (10): ReLU()
+          (11): Dropout(p=0.0, inplace=False)
+          (12): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (13): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (14): ReLU()
+          (15): Dropout(p=0.0, inplace=False)
+          (16): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (17): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (5): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU()
+          (3): Dropout(p=0.0, inplace=False)
+          (4): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (5): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (6): ReLU()
+          (7): Dropout(p=0.0, inplace=False)
+          (8): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (9): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (10): ReLU()
+          (11): Dropout(p=0.0, inplace=False)
+          (12): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (13): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+          (14): ReLU()
+          (15): Dropout(p=0.0, inplace=False)
+          (16): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (17): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (6): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(87,), stride=(1,), padding=(43,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (7): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (conv): Conv1d(512, 1024, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(1024, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+    )
+  )
+  (decoder): Decoder(
+    (layers): Sequential(
+      (0): Conv1d(1024, 5, kernel_size=(1,), stride=(1,))
+      (1): Permute()
+    )
+  )
+)
+Total parameters in model 6678533
