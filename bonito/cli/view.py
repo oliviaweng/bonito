@@ -16,7 +16,7 @@ def main(args):
     summary(model, 
         input_size=args.input_size, 
         depth=9,
-        col_names=['input_size', 'output_size'], 
+        col_names=['input_size', 'output_size', 'mult_adds'], 
         row_settings=['var_names']
     )
     print("Total parameters in model", sum(p.numel() for p in model.parameters()))

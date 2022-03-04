@@ -200,8 +200,6 @@ class Block(Module):
 
     def forward(self, x):
         _x = x
-        print('Block self.conv')
-        print(self.conv)
         for layer in self.conv:
             _x = layer(_x)
         if self.use_res:
@@ -270,7 +268,7 @@ class ShortenableBlock(Module):
         padding = self.get_padding(kernel_size[0], stride[0], dilation[0])
 
         # add the first n - 1 convolutions + activation
-        for _ in range(repeat - 1):
+        for _ in range(repeat):
             self.conv.extend(
                 self.get_subblock(
                     _in_channels, out_channels, kernel_size=kernel_size,
@@ -313,17 +311,14 @@ class ShortenableBlock(Module):
 
     def forward(self, x):
         _x = x
-        print('ShortenableBlock self.conv')
         for i, layer in enumerate(self.conv):
-            print(f'layer {i}')
-            print(layer)
             x_in = _x
             _x = layer(_x)
             if x_in.shape != _x.shape:
                 _x = _x + self.projected_residual(x_in)
             else:
                 _x = _x + self.short_residual(x_in)
-        return self.activation(_x)
+        return _x
 
 
 class Decoder(Module):

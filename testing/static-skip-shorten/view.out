@@ -20,24 +20,35 @@ Model(
             (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (1): ShortenableSubBlock(
             (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (2): ShortenableSubBlock(
             (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (3): ShortenableSubBlock(
             (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (4): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
         )
@@ -56,24 +67,35 @@ Model(
             (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (1): ShortenableSubBlock(
             (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (2): ShortenableSubBlock(
             (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (3): ShortenableSubBlock(
             (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
             (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (4): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
         )
@@ -92,24 +114,35 @@ Model(
             (depthwise): Conv1d(256, 256, kernel_size=(51,), stride=(1,), padding=(25,), groups=256, bias=False)
             (pointwise): Conv1d(256, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (1): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (2): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (3): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (4): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
         )
@@ -128,24 +161,35 @@ Model(
             (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (1): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (2): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (3): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (4): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
         )
@@ -164,24 +208,35 @@ Model(
             (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (1): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (2): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
           (3): ShortenableSubBlock(
             (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
             (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
             (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (4): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (act): ReLU()
             (dropout): Dropout(p=0.0, inplace=False)
           )
         )
@@ -228,18 +283,284 @@ Model(
     )
   )
 )
-Block self.conv
-ModuleList(
-  (0): TCSConv1d(
-    (conv): Conv1d(1, 256, kernel_size=(33,), stride=(3,), padding=(16,), bias=False)
-  )
-  (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-)
-ShortenableBlock self.conv
-layer 0
-ShortenableSubBlock(
-  (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
-  (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
-  (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-  (dropout): Dropout(p=0.0, inplace=False)
-)
+==================================================================================================================================
+Layer (type (var_name))                                 Input Shape               Output Shape              Mult-Adds
+==================================================================================================================================
+Model                                                   --                        --                        --
+├─Encoder (encoder)                                     --                        --                        --
+│    └─Sequential (encoder)                             --                        --                        --
+│    │    └─Block (0)                                   --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    └─ShortenableBlock (1)                        --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    └─ShortenableBlock (2)                        --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    └─ShortenableBlock (3)                        --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    └─ShortenableBlock (4)                        --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    └─ShortenableBlock (5)                        --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    └─Block (6)                                   --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    └─Block (7)                                   --                        --                        --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+├─Encoder (encoder)                                     [1, 1, 3600]              [1, 1024, 1200]           --
+│    └─Sequential (encoder)                             [1, 1, 3600]              [1, 1024, 1200]           --
+│    │    └─Block (0)                                   [1, 1, 3600]              [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─TCSConv1d (0)                     [1, 1, 3600]              [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (conv)                [1, 1, 3600]              [1, 256, 1200]            10,137,600
+│    │    │    │    └─BatchNorm1d (1)                   [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    └─Sequential (activation)                [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    └─ReLU (0)                          [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    └─Dropout (1)                       [1, 256, 1200]            [1, 256, 1200]            --
+│    │    └─ShortenableBlock (1)                        [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (0)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            10,137,600
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (1)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            10,137,600
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (2)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            10,137,600
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (3)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            10,137,600
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (4)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            10,137,600
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    └─ShortenableBlock (2)                        [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (0)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            11,980,800
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (1)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            11,980,800
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (2)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            11,980,800
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (3)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            11,980,800
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (4)           [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            11,980,800
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 256, 1200]            78,643,200
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 256, 1200]            [1, 256, 1200]            512
+│    │    │    │    │    └─ReLU (act)                   [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 256, 1200]            [1, 256, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 256, 1200]            [1, 256, 1200]            --
+│    │    └─ShortenableBlock (3)                        [1, 256, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (0)           [1, 256, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 256, 1200]            [1, 256, 1200]            15,667,200
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 256, 1200]            [1, 512, 1200]            157,286,400
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Sequential (projected_residual)        [1, 256, 1200]            [1, 512, 1200]            --
+│    │    │    │    └─TCSConv1d (0)                     [1, 256, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (conv)                [1, 256, 1200]            [1, 512, 1200]            157,286,400
+│    │    │    │    └─BatchNorm1d (1)                   [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (1)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            31,334,400
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (2)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            31,334,400
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (3)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            31,334,400
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (4)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            31,334,400
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    └─ShortenableBlock (4)                        [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (0)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            38,707,200
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (1)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            38,707,200
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (2)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            38,707,200
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (3)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            38,707,200
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (4)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            38,707,200
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    └─ShortenableBlock (5)                        [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (0)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            46,080,000
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (1)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            46,080,000
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (2)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            46,080,000
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (3)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            46,080,000
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─ShortenableSubBlock (4)           [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            46,080,000
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    │    └─BatchNorm1d (bn1d)           [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    │    │    └─ReLU (act)                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Dropout (dropout)            [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─Identity (short_residual)              [1, 512, 1200]            [1, 512, 1200]            --
+│    │    └─Block (6)                                   [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─TCSConv1d (0)                     [1, 512, 1200]            [1, 512, 1200]            --
+│    │    │    │    │    └─Conv1d (depthwise)           [1, 512, 1200]            [1, 512, 1200]            53,452,800
+│    │    │    │    │    └─Conv1d (pointwise)           [1, 512, 1200]            [1, 512, 1200]            314,572,800
+│    │    │    │    └─BatchNorm1d (1)                   [1, 512, 1200]            [1, 512, 1200]            1,024
+│    │    │    └─Sequential (activation)                [1, 512, 1200]            [1, 512, 1200]            --
+│    │    └─Block (0)                                   --                        --                        --
+│    │    │    └─Sequential (activation)                --                        --                        --
+│    │    │    │    └─ReLU (0)                          [1, 512, 1200]            [1, 512, 1200]            --
+│    │    └─Block (6)                                   --                        --                        --
+│    │    │    └─Sequential (activation)                --                        --                        --
+│    │    │    │    └─Dropout (1)                       [1, 512, 1200]            [1, 512, 1200]            --
+│    │    └─Block (7)                                   [1, 512, 1200]            [1, 1024, 1200]           --
+│    │    │    └─ModuleList (conv)                      --                        --                        --
+│    │    │    │    └─TCSConv1d (0)                     [1, 512, 1200]            [1, 1024, 1200]           --
+│    │    │    │    │    └─Conv1d (conv)                [1, 512, 1200]            [1, 1024, 1200]           629,145,600
+│    │    │    │    └─BatchNorm1d (1)                   [1, 1024, 1200]           [1, 1024, 1200]           2,048
+│    │    │    └─Sequential (activation)                [1, 1024, 1200]           [1, 1024, 1200]           --
+│    │    └─Block (0)                                   --                        --                        --
+│    │    │    └─Sequential (activation)                --                        --                        --
+│    │    │    │    └─ReLU (0)                          [1, 1024, 1200]           [1, 1024, 1200]           --
+│    │    └─Block (7)                                   --                        --                        --
+│    │    │    └─Sequential (activation)                --                        --                        --
+│    │    │    │    └─Dropout (1)                       [1, 1024, 1200]           [1, 1024, 1200]           --
+├─Decoder (decoder)                                     [1, 1024, 1200]           [1200, 1, 5]              --
+│    └─Sequential (layers)                              [1, 1024, 1200]           [1200, 1, 5]              --
+│    │    └─Conv1d (0)                                  [1, 1024, 1200]           [1, 5, 1200]              6,150,000
+│    │    └─Permute (1)                                 [1, 5, 1200]              [1200, 1, 5]              --
+==================================================================================================================================
+Total params: 6,020,101
+Trainable params: 6,020,101
+Non-trainable params: 0
+Total mult-adds (G): 7.19
+==================================================================================================================================
+Input size (MB): 0.01
+Forward/backward pass size (MB): 341.65
+Params size (MB): 24.08
+Estimated Total Size (MB): 365.75
+==================================================================================================================================
+Total parameters in model 6678533
