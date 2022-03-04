@@ -14,10 +14,7 @@ spec:
             cd /dna-volume/bonito;
             git pull;
             source venv3/bin/activate;
-            pip install --upgrade pip;
-            pip install -r requirements.txt;
-            python setup.py develop;
-            ./static-shorten-train.sh
+            ./scripts/static-shorten-train.sh
             |& tee /dna-volume/training-logs/static-skip-shorten.log
         volumeMounts:
         - mountPath: /dna-volume
@@ -44,6 +41,6 @@ spec:
               - key: gpu-type
                 operator: In
                 values:
-                - TITANRTX
+                - "3090"
 
   backoffLimit: 2
