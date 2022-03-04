@@ -52,6 +52,8 @@ def main(args):
     train_loader = DataLoader(**loader_kwargs, **train_loader_kwargs)
     valid_loader = DataLoader(**loader_kwargs, **valid_loader_kwargs)
 
+    print(f'input data shape: {next(iter(train_loader))[0].shape}')
+
     if args.pretrained:
         dirname = args.pretrained
         if not os.path.isdir(dirname) and os.path.isdir(os.path.join(__models__, dirname)):

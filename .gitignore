@@ -21,3 +21,4 @@ Untitled*.ipynb
 *.deb
 tmp/
 *.npy
+.vscode/

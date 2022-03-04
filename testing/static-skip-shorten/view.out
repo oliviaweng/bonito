@@ -1,0 +1,245 @@
+bonito view --config=./bonito/models/configs/dna_r9.4.1@v1-static-skip-shorten.toml --input_size 1 1 3600
+Model(
+  (encoder): Encoder(
+    (encoder): Sequential(
+      (0): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (conv): Conv1d(1, 256, kernel_size=(33,), stride=(3,), padding=(16,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (1): ShortenableBlock(
+        (conv): ModuleList(
+          (0): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (1): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (2): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (3): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (activation): ReLU()
+        (short_residual): Identity()
+        (projected_residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (2): ShortenableBlock(
+        (conv): ModuleList(
+          (0): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (1): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (2): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (3): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(39,), stride=(1,), padding=(19,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (activation): ReLU()
+        (short_residual): Identity()
+        (projected_residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (3): ShortenableBlock(
+        (conv): ModuleList(
+          (0): ShortenableSubBlock(
+            (depthwise): Conv1d(256, 256, kernel_size=(51,), stride=(1,), padding=(25,), groups=256, bias=False)
+            (pointwise): Conv1d(256, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (1): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (2): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (3): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(51,), stride=(1,), padding=(25,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (activation): ReLU()
+        (short_residual): Identity()
+        (projected_residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(256, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (4): ShortenableBlock(
+        (conv): ModuleList(
+          (0): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (1): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (2): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (3): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(63,), stride=(1,), padding=(31,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (activation): ReLU()
+        (short_residual): Identity()
+        (projected_residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (5): ShortenableBlock(
+        (conv): ModuleList(
+          (0): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (1): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (2): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (3): ShortenableSubBlock(
+            (depthwise): Conv1d(512, 512, kernel_size=(75,), stride=(1,), padding=(37,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+            (bn1d): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (activation): ReLU()
+        (short_residual): Identity()
+        (projected_residual): Sequential(
+          (0): TCSConv1d(
+            (conv): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (6): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (depthwise): Conv1d(512, 512, kernel_size=(87,), stride=(1,), padding=(43,), groups=512, bias=False)
+            (pointwise): Conv1d(512, 512, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(512, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (7): Block(
+        (conv): ModuleList(
+          (0): TCSConv1d(
+            (conv): Conv1d(512, 1024, kernel_size=(1,), stride=(1,), bias=False)
+          )
+          (1): BatchNorm1d(1024, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (activation): Sequential(
+          (0): ReLU()
+          (1): Dropout(p=0.0, inplace=False)
+        )
+      )
+    )
+  )
+  (decoder): Decoder(
+    (layers): Sequential(
+      (0): Conv1d(1024, 5, kernel_size=(1,), stride=(1,))
+      (1): Permute()
+    )
+  )
+)
+Block self.conv
+ModuleList(
+  (0): TCSConv1d(
+    (conv): Conv1d(1, 256, kernel_size=(33,), stride=(3,), padding=(16,), bias=False)
+  )
+  (1): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+)
+ShortenableBlock self.conv
+layer 0
+ShortenableSubBlock(
+  (depthwise): Conv1d(256, 256, kernel_size=(33,), stride=(1,), padding=(16,), groups=256, bias=False)
+  (pointwise): Conv1d(256, 256, kernel_size=(1,), stride=(1,), bias=False)
+  (bn1d): BatchNorm1d(256, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  (dropout): Dropout(p=0.0, inplace=False)
+)

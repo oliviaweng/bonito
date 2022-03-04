@@ -21,6 +21,7 @@ stride = [3]
 dilation = [1]
 dropout = 0.0
 residual = false
+short_residual = false
 separable = false
 
 # B1
@@ -31,7 +32,8 @@ kernel = [33]
 stride = [1]
 dilation = [1]
 dropout = 0.0
-residual = true
+residual = false
+short_residual = true
 separable = true
 
 # B2
@@ -42,7 +44,8 @@ kernel = [39]
 stride = [1]
 dilation = [1]
 dropout = 0.0
-residual = true
+residual = false
+short_residual = true
 separable = true
 
 # B3
@@ -53,7 +56,8 @@ kernel = [51]
 stride = [1]
 dilation = [1]
 dropout = 0.0
-residual = true
+residual = false
+short_residual = true
 separable = true
 
 # B4
@@ -64,7 +68,8 @@ kernel = [63]
 stride = [1]
 dilation = [1]
 dropout = 0.0
-residual = true
+residual = false
+short_residual = true
 separable = true
 
 # B5
@@ -75,7 +80,8 @@ kernel = [75]
 stride = [1]
 dilation = [1]
 dropout = 0.0
-residual = true
+residual = false
+short_residual = true
 separable = true
 
 # C2
@@ -87,6 +93,7 @@ stride = [1]
 dilation = [1]
 dropout = 0.0
 residual = false
+short_residual = false
 separable = true
 
 # C3
@@ -98,4 +105,5 @@ stride = [1]
 dilation = [1]
 dropout = 0.0
 residual = false
+short_residual = false
 separable = false
