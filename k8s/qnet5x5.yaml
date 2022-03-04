@@ -8,16 +8,17 @@ spec:
       containers:
       - name: gpu-container
         image: gitlab-registry.nrp-nautilus.io/prp/jupyter-stack/prp:latest
-        command: ["sleep", "infinity"]
-        # command: ["/bin/bash", "-c"]
-        # args:
-        #   -
-        #     cd /dna-volume/bonito;
-        #     source venv3/bin/activate;
-        #     pip install --upgrade pip;
-        #     pip install -r requirements.txt;
-        #     python setup.py develop;
-        #     bonito download --training
+        command: ["/bin/bash", "-c"]
+        args:
+          -
+            cd /dna-volume/bonito;
+            git pull;
+            source venv3/bin/activate;
+            pip install --upgrade pip;
+            pip install -r requirements.txt;
+            python setup.py develop;
+            ./static-shorten-train.sh
+            |& tee /dna-volume/training-logs/static-skip-shorten.log
         volumeMounts:
         - mountPath: /dna-volume
           name: dna-volume
