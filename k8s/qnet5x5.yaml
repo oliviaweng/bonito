@@ -41,6 +41,6 @@ spec:
               - key: gpu-type
                 operator: In
                 values:
-                - "3090"
+                - T4
 
   backoffLimit: 2
