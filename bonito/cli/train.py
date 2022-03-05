@@ -123,4 +123,5 @@ def argparser():
     parser.add_argument("--save-optim-every", default=10, type=int)
     parser.add_argument("--grad-accum-split", default=1, type=int)
     parser.add_argument("--testing", action="store_true", default=False)
+    # TODO: Start here. Add arguments for KD training + directory to teacher weights
     return parser

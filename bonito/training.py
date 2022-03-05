@@ -234,3 +234,225 @@ class Trainer:
                     'validation_mean': val_mean,
                     'validation_median': val_median
                 })
+
+
+class TrainerKD:
+    """
+    Knowledge Distillation training, wherein a student model learns from the teacher model's output
+    """
+    def __init__(
+        self, teacher, student, device, train_loader, valid_loader, criterion=None,
+        use_amp=True, lr_scheduler_fn=None, restore_optim=False,
+        save_optim_every=10, grad_accum_split=1, 
+        mse_loss_weight=0.35, student_loss_weight=0.65
+    ):
+        """
+        teacher: Teacher neural network model
+        student: Student nearal network model
+        """
+        self.teacher = teacher.to(device)
+        self.student = student.to(device)
+        self.device = device
+        self.train_loader = train_loader
+        self.valid_loader = valid_loader
+        # Both teacher and student models use ctc label smoothing loss defined in ctc.model 
+        self.criterion = criterion or student.loss  
+        self.use_amp = use_amp
+        self.lr_scheduler_fn = lr_scheduler_fn or linear_warmup_cosine_decay()
+        self.restore_optim = restore_optim
+        self.save_optim_every = save_optim_every
+        self.grad_accum_split = grad_accum_split
+        self.scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+        self.optimizer = None
+        self.mse_loss_weight = mse_loss_weight
+        self.student_loss_weight = student_loss_weight
+    
+    def train_one_step(self, batch):
+        self.optimizer.zero_grad()
+
+        losses = None
+        with amp.autocast(enabled=self.use_amp):
+            for data_, targets_, lengths_ in zip(*map(lambda t: t.chunk(self.grad_accum_split, dim=0), batch)):
+                data_, targets_, lengths_ = data_.to(self.device), targets_.to(self.device), lengths_.to(self.device)
+                student_scores_ = self.student(data_)
+                teacher_scores_ = self.teacher(data_)
+
+                assert(teacher_scores_.shape == student_scores_.shape, \
+                    f"For KD MSELoss, teacher and student output shapes must match. student shape = {student_scores_.shape} vs teacher shape = {teacher_scores_.shape}")
+                weighted_mse_loss =  self.mse_loss_weight * nn.MSELoss()(teacher_scores_, student_scores_)
+
+                losses_ = self.criterion(student_scores_, targets_, lengths_)
+                if not isinstance(losses_, dict): losses_ = {'loss': losses_}
+
+                total_student_loss = losses_.get('total_loss', losses_['loss']) / self.grad_accum_split
+
+                # NOTE: Currently using student's label smoothing loss--if thing's go wrong,
+                # might try plain ctc loss
+                weighted_student_loss = self.student_loss_weight * total_student_loss
+                kd_loss = weighted_mse_loss + weighted_student_loss
+                losses_['kd_loss'] = kd_loss
+                self.scaler.scale(kd_loss).backward()
+
+                losses = {
+                    k: ((v.item() / self.grad_accum_split) if losses is None else (v.item() / self.grad_accum_split) + losses[k])
+                    for k, v in losses_.items()
+                }
+
+        self.scaler.unscale_(self.optimizer)
+        grad_norm = torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=2.0).item()
+        self.scaler.step(self.optimizer)
+        self.scaler.update()
+
+        return losses, grad_norm
+
+    def train_one_epoch(self, loss_log, lr_scheduler, testing=False):
+        t0 = perf_counter()
+        chunks = 0
+        self.student.train()
+        self.teacher.eval()
+
+        progress_bar = tqdm(
+            total=len(self.train_loader), desc='[0/{}]'.format(len(self.train_loader.sampler)),
+            ascii=True, leave=True, ncols=100, bar_format='{l_bar}{bar}| [{elapsed}{postfix}]'
+        )
+        smoothed_loss = None
+
+        with progress_bar:
+
+            for batch in self.train_loader:
+
+                chunks += batch[0].shape[0]
+
+                losses, grad_norm = self.train_one_step(batch)
+
+                smoothed_loss = losses['loss'] if smoothed_loss is None else (0.01 * losses['loss'] + 0.99 * smoothed_loss)
+
+                progress_bar.set_postfix(loss='%.4f' % smoothed_loss)
+                progress_bar.set_description("[{}/{}]".format(chunks, len(self.train_loader.sampler)))
+                progress_bar.update()
+
+                if loss_log is not None:
+                    lr = lr_scheduler.get_last_lr() if lr_scheduler is not None else [pg["lr"] for pg in optim.param_groups]
+                    if len(lr) == 1: lr = lr[0]
+                    loss_log.append({
+                        'chunks': chunks,
+                        'time': perf_counter() - t0,
+                        'grad_norm': grad_norm,
+                        'lr': lr,
+                        **losses
+                    })
+
+                if lr_scheduler is not None: lr_scheduler.step()
+                if testing: # Only train for one batch
+                    break
+
+        return smoothed_loss, perf_counter() - t0
+
+    def validate_one_step(self, batch):
+        data, targets, lengths = batch
+
+        teacher_scores = self.teacher(data.to(self.device))
+        student_scores = self.student(data.to(self.device))
+
+        assert(teacher_scores.shape == student_scores.shape, \
+            f"For KD MSELoss, teacher and student output shapes must match. student shape = {student_scores.shape} vs teacher shape = {teacher_scores.shape}")
+        weighted_mse_loss =  self.mse_loss_weight * nn.MSELoss()(teacher_scores, student_scores)
+
+        losses = self.criterion(student_scores, targets.to(self.device), lengths.to(self.device))
+        losses = {k: v.item() for k, v in losses.items()} if isinstance(losses, dict) else losses.item()
+        # NOTE: Using total label smoothing loss--if this is bad, might try just using
+        # plain ctc loss, which is stored in losses['loss']
+        weighted_student_loss = self.student_loss_weight * losses['total_loss']
+        losses['kd_loss'] = weighted_mse_loss + weighted_student_loss
+
+        # NOTE: In CTC, student does NOT have decode_batch
+        if hasattr(self.student, 'decode_batch'): 
+            student_seqs = self.student.decode_batch(student_scores)
+        else:
+            student_seqs = [self.student.decode(x) for x in permute(student_scores, 'TNC', 'NTC')]
+            teacher_seqs = [self.teacher.decode(x) for x in permute(teacher_scores, 'TNC', 'NTC')]
+        # Compute accuracy for student
+        student_refs = [decode_ref(target, self.student.alphabet) for target in targets]
+        teacher_refs = [decode_ref(target, self.teacher.alphabet) for target in targets]
+        student_accs = [
+            accuracy(ref, seq, min_coverage=0.5) if len(seq) else 0. for ref, seq in zip(student_refs, student_seqs)
+        ]
+        teacher_accs = [
+            accuracy(ref, seq, min_coverage=0.5) if len(seq) else 0. for ref, seq in zip(teacher_refs, teacher_seqs)
+        ]
+        return student_seqs, student_refs, student_accs, teacher_accs, losses
+    
+    def validate_one_epoch(self):
+        self.teacher.eval()
+        self.student.eval()
+        with torch.no_grad():
+            student_seqs, student_refs, student_accs, teacher_accs, losses = \
+                zip(*(self.validate_one_step(batch) for batch in self.valid_loader))
+        seqs, refs, student_accs, teacher_accs = (sum(x, []) for x in (student_seqs, student_refs, student_accs, teacher_accs))
+        loss = np.mean([(x['loss'] if isinstance(x, dict) else x) for x in losses])
+        kd_loss = np.mean([(x['kd_loss'] if isinstance(x, dict) else x) for x in losses])
+        return loss, kd_loss, np.mean(student_accs), np.median(student_accs), np.mean(teacher_accs), np.median(teacher_accs)
+
+    def init_optimizer(self, lr, **kwargs):
+        """
+        Only training student, so only need to set up optimizer for student
+        """
+        if isinstance(lr, (list, tuple)):
+            if len(list(self.student.children())) != len(lr):
+                raise ValueError('Number of lrs does not match number of model children')
+            param_groups = [{'params': list(m.parameters()), 'lr': v} for (m, v) in zip(self.student.children(), lr)]
+            self.optimizer = torch.optim.AdamW(param_groups, lr=lr[0], **kwargs)
+        else:
+            self.optimizer = torch.optim.AdamW(self.student.parameters(), lr=lr, **kwargs)
+
+    def get_lr_scheduler(self, epochs, last_epoch=0):
+        return self.lr_scheduler_fn(self.optimizer, self.train_loader, epochs, last_epoch)
+
+    def fit(self, workdir, teacherdir, epochs=1, lr=2e-3, testing=False, **optim_kwargs):
+        if self.optimizer is None:
+            self.init_optimizer(lr, **optim_kwargs)
+
+        # Load teacher weights
+        _ = load_state(teacherdir, self.device, self.teacher)
+        # Load student weights, if restoring from previous training run
+        last_epoch = load_state(workdir, self.device, self.student, self.optimizer if self.restore_optim else None)
+
+        if self.restore_optim:
+        # override learning rate to new value
+            for i, pg in enumerate(self.optimizer.param_groups):
+                pg["initial_lr"] = pg["lr"] = lr[i] if isinstance(lr, (list, tuple)) else lr
+
+        lr_scheduler = self.get_lr_scheduler(epochs, last_epoch=last_epoch)
+
+        for epoch in range(1 + last_epoch, epochs + 1 + last_epoch):
+            try:
+                with bonito.io.CSVLogger(os.path.join(workdir, 'losses_{}.csv'.format(epoch))) as loss_log:
+                    train_loss, duration = self.train_one_epoch(loss_log, lr_scheduler, testing)
+
+                student_state = self.student.module.state_dict() if hasattr(self.model, 'module') else self.student.state_dict()
+                torch.save(student_state, os.path.join(workdir, "weights_%s.tar" % epoch))
+                if epoch % self.save_optim_every == 0:
+                    torch.save(self.optimizer.state_dict(), os.path.join(workdir, "optim_%s.tar" % epoch))
+
+                # TODO: Temporarily store teacher mean for testing correct weight loading
+                val_student_loss, val_kd_loss, val_student_mean, val_student_median, val_teacher_mean, val_teacher_median = self.validate_one_epoch()
+            except KeyboardInterrupt:
+                break
+
+            print("[epoch {}] directory={} student_loss={:.4f} kd_loss={:.4f} mean_student_acc={:.3f}% median_student_acc={:.3f} mean_teacher_acc={:.3f}% median_teacher_acc={:.3f}%".format(
+                epoch, workdir, val_student_loss, val_kd_loss, val_student_mean, val_student_median, val_teacher_mean, val_teacher_median
+            ))
+
+            with bonito.io.CSVLogger(os.path.join(workdir, 'training.csv')) as training_log:
+                training_log.append({
+                    'time': datetime.today(),
+                    'duration': int(duration),
+                    'epoch': epoch,
+                    'train_loss': train_loss,
+                    'validation_student_loss': val_student_loss,
+                    'validation_kd_loss': val_kd_loss,
+                    'validation_student_mean': val_student_mean,
+                    'validation_student_median': val_student_median,
+                    'validation_teacher_mean': val_teacher_mean,
+                    'validation_teacher_median': val_teacher_median
+                })
