@@ -13,7 +13,7 @@ from importlib import import_module
 from bonito.data import load_numpy, load_script
 from bonito.util import __models__, default_config, default_data
 from bonito.util import load_model, load_symbol, init, half_supported
-from bonito.training import load_state, Trainer
+from bonito.training import TrainerKD, load_state, Trainer
 
 import toml
 import torch
@@ -76,6 +76,12 @@ def main(args):
     else:
         model = load_symbol(config, 'Model')(config)
 
+    kd = False
+    if args.teacher is not None:
+        kd = True
+        print(f"[loading teacher model {args.teacher}]")
+        teacher_model = load_model(args.teacher, device, half=False)
+
     if config.get("lr_scheduler"):
         sched_config = config["lr_scheduler"]
         lr_scheduler_fn = getattr(
@@ -84,14 +90,25 @@ def main(args):
     else:
         lr_scheduler_fn = None
 
-    trainer = Trainer(
-        model, device, train_loader, valid_loader,
-        use_amp=half_supported() and not args.no_amp,
-        lr_scheduler_fn=lr_scheduler_fn,
-        restore_optim=args.restore_optim,
-        save_optim_every=args.save_optim_every,
-        grad_accum_split=args.grad_accum_split
-    )
+    if kd: # Use knowledge distillation during training
+        trainer = TrainerKD(
+            teacher_model, model, 
+            device, train_loader, valid_loader,
+            use_amp=half_supported() and not args.no_amp,
+            lr_scheduler_fn=lr_scheduler_fn,
+            restore_optim=args.restore_optim,
+            save_optim_every=args.save_optim_every,
+            grad_accum_split=args.grad_accum_split
+        )
+    else:
+        trainer = Trainer(
+            model, device, train_loader, valid_loader,
+            use_amp=half_supported() and not args.no_amp,
+            lr_scheduler_fn=lr_scheduler_fn,
+            restore_optim=args.restore_optim,
+            save_optim_every=args.save_optim_every,
+            grad_accum_split=args.grad_accum_split
+        )
 
     if (',' in args.lr):
         lr = [float(x) for x in args.lr.split(',')]
@@ -122,6 +139,7 @@ def argparser():
     parser.add_argument("--nondeterministic", action="store_true", default=False)
     parser.add_argument("--save-optim-every", default=10, type=int)
     parser.add_argument("--grad-accum-split", default=1, type=int)
-    parser.add_argument("--testing", action="store_true", default=False)
+    parser.add_argument("--testing", action="store_true", default=False, help="Run 1 training and 1 validation step to run through entire training process for debugging")
+    parser.add_argument("--teacher", default=None, type=Path, help="path to teacher weights for knowledge distillation")
     # TODO: Start here. Add arguments for KD training + directory to teacher weights
     return parser

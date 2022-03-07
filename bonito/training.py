@@ -277,8 +277,8 @@ class TrainerKD:
                 student_scores_ = self.student(data_)
                 teacher_scores_ = self.teacher(data_)
 
-                assert(teacher_scores_.shape == student_scores_.shape, \
-                    f"For KD MSELoss, teacher and student output shapes must match. student shape = {student_scores_.shape} vs teacher shape = {teacher_scores_.shape}")
+                assert teacher_scores_.shape == student_scores_.shape, \
+                    f"For KD MSELoss, teacher and student output shapes must match. student shape = {student_scores_.shape} vs teacher shape = {teacher_scores_.shape}"
                 weighted_mse_loss =  self.mse_loss_weight * nn.MSELoss()(teacher_scores_, student_scores_)
 
                 losses_ = self.criterion(student_scores_, targets_, lengths_)
@@ -299,7 +299,7 @@ class TrainerKD:
                 }
 
         self.scaler.unscale_(self.optimizer)
-        grad_norm = torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=2.0).item()
+        grad_norm = torch.nn.utils.clip_grad_norm_(self.student.parameters(), max_norm=2.0).item()
         self.scaler.step(self.optimizer)
         self.scaler.update()
 
@@ -354,9 +354,9 @@ class TrainerKD:
         teacher_scores = self.teacher(data.to(self.device))
         student_scores = self.student(data.to(self.device))
 
-        assert(teacher_scores.shape == student_scores.shape, \
-            f"For KD MSELoss, teacher and student output shapes must match. student shape = {student_scores.shape} vs teacher shape = {teacher_scores.shape}")
-        weighted_mse_loss =  self.mse_loss_weight * nn.MSELoss()(teacher_scores, student_scores)
+        assert teacher_scores.shape == student_scores.shape, \
+            f"For KD MSELoss, teacher and student output shapes must match. student shape = {student_scores.shape} vs teacher shape = {teacher_scores.shape}"
+        weighted_mse_loss =  self.mse_loss_weight * nn.MSELoss()(teacher_scores, student_scores).item() # MSELoss returns a tensor of size 1
 
         losses = self.criterion(student_scores, targets.to(self.device), lengths.to(self.device))
         losses = {k: v.item() for k, v in losses.items()} if isinstance(losses, dict) else losses.item()
@@ -364,7 +364,6 @@ class TrainerKD:
         # plain ctc loss, which is stored in losses['loss']
         weighted_student_loss = self.student_loss_weight * losses['total_loss']
         losses['kd_loss'] = weighted_mse_loss + weighted_student_loss
-
         # NOTE: In CTC, student does NOT have decode_batch
         if hasattr(self.student, 'decode_batch'): 
             student_seqs = self.student.decode_batch(student_scores)
@@ -382,9 +381,13 @@ class TrainerKD:
         ]
         return student_seqs, student_refs, student_accs, teacher_accs, losses
     
-    def validate_one_epoch(self):
+    def validate_one_epoch(self, testing=False):
         self.teacher.eval()
         self.student.eval()
+        if testing:
+            for batch in self.valid_loader:
+                self.valid_loader = [batch]
+                break
         with torch.no_grad():
             student_seqs, student_refs, student_accs, teacher_accs, losses = \
                 zip(*(self.validate_one_step(batch) for batch in self.valid_loader))
@@ -408,12 +411,10 @@ class TrainerKD:
     def get_lr_scheduler(self, epochs, last_epoch=0):
         return self.lr_scheduler_fn(self.optimizer, self.train_loader, epochs, last_epoch)
 
-    def fit(self, workdir, teacherdir, epochs=1, lr=2e-3, testing=False, **optim_kwargs):
+    def fit(self, workdir, epochs=1, lr=2e-3, testing=False, **optim_kwargs):
         if self.optimizer is None:
             self.init_optimizer(lr, **optim_kwargs)
 
-        # Load teacher weights
-        _ = load_state(teacherdir, self.device, self.teacher)
         # Load student weights, if restoring from previous training run
         last_epoch = load_state(workdir, self.device, self.student, self.optimizer if self.restore_optim else None)
 
@@ -429,13 +430,13 @@ class TrainerKD:
                 with bonito.io.CSVLogger(os.path.join(workdir, 'losses_{}.csv'.format(epoch))) as loss_log:
                     train_loss, duration = self.train_one_epoch(loss_log, lr_scheduler, testing)
 
-                student_state = self.student.module.state_dict() if hasattr(self.model, 'module') else self.student.state_dict()
+                student_state = self.student.module.state_dict() if hasattr(self.student, 'module') else self.student.state_dict()
                 torch.save(student_state, os.path.join(workdir, "weights_%s.tar" % epoch))
                 if epoch % self.save_optim_every == 0:
                     torch.save(self.optimizer.state_dict(), os.path.join(workdir, "optim_%s.tar" % epoch))
 
                 # TODO: Temporarily store teacher mean for testing correct weight loading
-                val_student_loss, val_kd_loss, val_student_mean, val_student_median, val_teacher_mean, val_teacher_median = self.validate_one_epoch()
+                val_student_loss, val_kd_loss, val_student_mean, val_student_median, val_teacher_mean, val_teacher_median = self.validate_one_epoch(testing)
             except KeyboardInterrupt:
                 break
 
