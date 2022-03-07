@@ -13,12 +13,8 @@ spec:
     resources:
       limits:
         nvidia.com/gpu: 1
-        memory: 16Gi
-        cpu: "6"
       requests:
         nvidia.com/gpu: "1" 
-        cpu: "6"
-        memory: 12Gi
   volumes:
     - name: dna-volume
       persistentVolumeClaim:
