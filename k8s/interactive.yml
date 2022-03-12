@@ -12,9 +12,9 @@ spec:
       name: dna-volume
     resources:
       limits:
-        nvidia.com/gpu: 1
+        nvidia.com/gpu: 0
       requests:
-        nvidia.com/gpu: "1" 
+        nvidia.com/gpu: "0" 
   volumes:
     - name: dna-volume
       persistentVolumeClaim:

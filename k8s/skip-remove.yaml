@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dna-qnet
+  name: dna-kd-remove
 spec:
   template:
     spec:
@@ -14,8 +14,8 @@ spec:
             cd /dna-volume/bonito;
             git pull;
             source venv3/bin/activate;
-            ./scripts/static-shorten-train.sh
-            |& tee /dna-volume/training-logs/static-skip-shorten.log
+            ./scripts/kd-skip-remove-train.sh
+            |& tee /dna-volume/training-logs/kd-skip-remove.log
         volumeMounts:
         - mountPath: /dna-volume
           name: dna-volume
@@ -26,7 +26,7 @@ spec:
             nvidia.com/gpu: "1"
           requests:
             memory: 50Gi
-            cpu: "1"
+            cpu: "4"
             nvidia.com/gpu: "1"    
       volumes:
         - name: dna-volume
