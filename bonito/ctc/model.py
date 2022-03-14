@@ -69,20 +69,23 @@ class Encoder(Module):
         features = self.config['input']['features']
         activation = layers[self.config['encoder']['activation']]()
         encoder_layers = []
+        self.residual_layers = [] # List of indices of which blocks in `encoder_layers` have some sort of residual connection 
 
-        for layer in self.config['block']:
+        for i, layer in enumerate(self.config['block']):
             if 'short_residual' in layer and layer['short_residual']:
-                encoder_layers.append(ShortenableBlock(
-                    features, 
-                    layer['filters'], 
-                    activation,
-                    repeat=layer['repeat'], 
-                    kernel_size=layer['kernel'],
-                    stride=layer['stride'], 
-                    dilation=layer['dilation'],
-                    dropout=layer['dropout'], 
-                    separable=layer['separable'],
-                ))
+                encoder_layers.append(
+                    ShortenableBlock(
+                        features, 
+                        layer['filters'], 
+                        activation,
+                        repeat=layer['repeat'], 
+                        kernel_size=layer['kernel'],
+                        stride=layer['stride'], 
+                        dilation=layer['dilation'],
+                        dropout=layer['dropout'], 
+                        separable=layer['separable'],
+                    )
+                )
             else:
                 encoder_layers.append(
                     Block(
@@ -93,6 +96,8 @@ class Encoder(Module):
                         separable=layer['separable'],
                     )
                 )
+                if layer['residual']:
+                    self.residual_layers.append(i)
 
             features = layer['filters']
 
@@ -334,3 +339,25 @@ class Decoder(Module):
 
     def forward(self, x):
         return log_softmax(self.layers(x), dim=-1)
+
+
+# Model modifier functions
+def update_skip_removal(model, epoch):
+    """
+    Remove skip connection every epoch, starting from the head of the network.
+    At epoch i, skip connection i is removed.
+
+    Returns True if model modified; otherwise, False
+
+    model: QuartzNet model to modify
+    epoch: Current epoch
+    """
+    # In the CTC QuartzNet model, the residual layers are layers [1, 2, 3, 4, 5],
+    # which is 1-indexed. Epochs are also 1-indexed. This code is model-specific
+    # and thus hacky.
+    if epoch in model.encoder.residual_layers:
+        print(f'\n\nupdate skip removal at epoch {epoch}')
+        assert model.encoder.encoder[epoch].use_res
+        model.encoder.encoder[epoch].use_res = False
+
+    return True

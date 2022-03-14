@@ -7,6 +7,13 @@ import argparse
 from bonito.util import load_symbol
 from torchinfo import summary
 
+def print_model(model, input_size):
+    summary(model, 
+        input_size=input_size, 
+        depth=9,
+        col_names=['input_size', 'output_size', 'mult_adds'], 
+        row_settings=['var_names']
+    )
 
 def main(args):
     config = toml.load(args.config)

@@ -9,6 +9,7 @@ from argparse import ArgumentParser
 from argparse import ArgumentDefaultsHelpFormatter
 from pathlib import Path
 from importlib import import_module
+from tokenize import String
 
 from bonito.data import load_numpy, load_script
 from bonito.util import __models__, default_config, default_data
@@ -94,6 +95,7 @@ def main(args):
         trainer = TrainerKD(
             teacher_model, model, 
             device, train_loader, valid_loader,
+            modifier=args.modifier,
             use_amp=half_supported() and not args.no_amp,
             lr_scheduler_fn=lr_scheduler_fn,
             restore_optim=args.restore_optim,
@@ -141,5 +143,5 @@ def argparser():
     parser.add_argument("--grad-accum-split", default=1, type=int)
     parser.add_argument("--testing", action="store_true", default=False, help="Run 1 training and 1 validation step to run through entire training process for debugging")
     parser.add_argument("--teacher", default=None, type=Path, help="path to teacher weights for knowledge distillation")
-    # TODO: Start here. Add arguments for KD training + directory to teacher weights
+    parser.add_argument("--modifier", default=None, choices=['remove', 'shorten'], help="Select which model modifier algorithm to use")
     return parser
