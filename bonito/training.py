@@ -10,7 +10,7 @@ from time import perf_counter
 from collections import OrderedDict
 from datetime import datetime
 from bonito.cli.view import print_model
-from bonito.ctc.model import update_skip_removal
+from bonito.ctc.model import update_skip_removal, update_skip_shorten
 
 from bonito.schedule import linear_warmup_cosine_decay
 from bonito.util import accuracy, decode_ref, permute, concat, match_names
@@ -264,7 +264,7 @@ class TrainerKD:
         self.valid_loader = valid_loader
         modifiers = {
             'remove': update_skip_removal,
-            # 'shorten': update_skip_shorten,
+            'shorten': update_skip_shorten,
         }
         self.modifier = modifiers.get(modifier, None)
         # Both teacher and student models use ctc label smoothing loss defined in ctc.model 
@@ -440,7 +440,6 @@ class TrainerKD:
         for epoch in range(1 + last_epoch, epochs + 1 + last_epoch):
             try:
                 with bonito.io.CSVLogger(os.path.join(workdir, 'losses_{}.csv'.format(epoch))) as loss_log:
-                    print(f'modifier: {self.modifier}')
                     if self.modifier and self.modifier(self.student, epoch):
                         print_model(self.student, next(iter(self.train_loader))[0].shape)
                     

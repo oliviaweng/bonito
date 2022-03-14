@@ -78,6 +78,7 @@ class Encoder(Module):
                         features, 
                         layer['filters'], 
                         activation,
+                        residual=layer['default_residual'], # NOTE: Only shortenable blocks have default_residual flag. It's only on for dynamic skip shortening. When false, skips are statically shortened from the start.
                         repeat=layer['repeat'], 
                         kernel_size=layer['kernel'],
                         stride=layer['stride'], 
@@ -86,6 +87,8 @@ class Encoder(Module):
                         separable=layer['separable'],
                     )
                 )
+                if layer['short_residual']:
+                    self.residual_layers.append(i)
             else:
                 encoder_layers.append(
                     Block(
@@ -265,7 +268,7 @@ class ShortenableBlock(Module):
 
         super(ShortenableBlock, self).__init__()
 
-        self.use_res = residual
+        self.use_default_res = residual # When default res is False, use short residuals instead
         self.conv = ModuleList()
 
         _in_channels = in_channels
@@ -316,13 +319,16 @@ class ShortenableBlock(Module):
 
     def forward(self, x):
         _x = x
-        for i, layer in enumerate(self.conv):
+        for _, layer in enumerate(self.conv):
             x_in = _x
             _x = layer(_x)
-            if x_in.shape != _x.shape:
-                _x = _x + self.projected_residual(x_in)
-            else:
-                _x = _x + self.short_residual(x_in)
+            if not self.use_default_res:
+                if x_in.shape != _x.shape:
+                    _x = _x + self.projected_residual(x_in)
+                else:
+                    _x = _x + self.short_residual(x_in)
+        if self.use_default_res:
+            _x = _x + self.projected_residual(x)
         return _x
 
 
@@ -359,5 +365,28 @@ def update_skip_removal(model, epoch):
         print(f'\n\nupdate skip removal at epoch {epoch}')
         assert model.encoder.encoder[epoch].use_res
         model.encoder.encoder[epoch].use_res = False
+        return True
 
-    return True
+    return False
+
+
+def update_skip_shorten(model, epoch):
+    """
+    Shorten skip connection every epoch, starting from the head of the network.
+    At epoch i, skip connection i is shortened into smaller skips.
+
+    Returns True if model modified; otherwise, False
+
+    model: QuartzNet model to modify
+    epoch: Current epoch
+    """
+    # In the CTC QuartzNet model, the residual layers are layers [1, 2, 3, 4, 5],
+    # which is 1-indexed. Epochs are also 1-indexed. This code is model-specific
+    # and thus hacky.
+    if epoch in model.encoder.residual_layers:
+        print(f'\n\nupdate skip shorten at epoch {epoch}')
+        assert model.encoder.encoder[epoch].use_default_res
+        model.encoder.encoder[epoch].use_default_res = False
+        return True
+
+    return False
