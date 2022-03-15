@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dna-kd-remove
+  name: dna-dyn-remove
 spec:
   template:
     spec:
@@ -14,19 +14,19 @@ spec:
             cd /dna-volume/bonito;
             git pull;
             source venv3/bin/activate;
-            ./scripts/kd-skip-remove-train.sh
-            |& tee /dna-volume/training-logs/kd-skip-remove.log
+            ./scripts/dynamic-skip-remove-train.sh
+            |& tee /dna-volume/training-logs/dynamic-skip-remove.log
         volumeMounts:
         - mountPath: /dna-volume
           name: dna-volume
         resources:
           limits:
             memory: 56Gi
-            cpu: "6"
+            cpu: "4"
             nvidia.com/gpu: "1"
           requests:
             memory: 50Gi
-            cpu: "4"
+            cpu: "1"
             nvidia.com/gpu: "1"    
       volumes:
         - name: dna-volume
@@ -38,9 +38,9 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: gpu-type
+              - key: nvidia.com/gpu.product
                 operator: In
                 values:
-                - T4
+                - Tesla-T4
 
   backoffLimit: 2

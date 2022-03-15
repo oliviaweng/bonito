@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dna-kd-short
+  name: dna-dyn-short
 spec:
   template:
     spec:
@@ -14,8 +14,8 @@ spec:
             cd /dna-volume/bonito;
             git pull;
             source venv3/bin/activate;
-            ./scripts/kd-skip-shorten-train.sh
-            |& tee /dna-volume/training-logs/kd-skip-shorten.log
+            ./scripts/dynamic-skip-shorten-train.sh
+            |& tee /dna-volume/training-logs/dynamic-skip-shorten.log
         volumeMounts:
         - mountPath: /dna-volume
           name: dna-volume
@@ -26,7 +26,7 @@ spec:
             nvidia.com/gpu: "1"
           requests:
             memory: 50Gi
-            cpu: "4"
+            cpu: "1"
             nvidia.com/gpu: "1"    
       volumes:
         - name: dna-volume
@@ -38,9 +38,9 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: gpu-type
+              - key: nvidia.com/gpu.product
                 operator: In
                 values:
-                - T4
+                - NVIDIA-GeForce-RTX-2080-Ti
 
   backoffLimit: 2
