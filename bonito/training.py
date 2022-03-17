@@ -75,7 +75,7 @@ class Trainer:
     def __init__(
         self, model, device, train_loader, valid_loader, criterion=None,
         use_amp=True, lr_scheduler_fn=None, restore_optim=False,
-        save_optim_every=10, grad_accum_split=1
+        save_optim_every=1, grad_accum_split=1
     ):
         self.model = model.to(device)
         self.device = device

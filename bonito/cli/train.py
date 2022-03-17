@@ -139,7 +139,7 @@ def argparser():
     parser.add_argument("-f", "--force", action="store_true", default=False)
     parser.add_argument("--restore-optim", action="store_true", default=False)
     parser.add_argument("--nondeterministic", action="store_true", default=False)
-    parser.add_argument("--save-optim-every", default=10, type=int)
+    parser.add_argument("--save-optim-every", default=1, type=int)
     parser.add_argument("--grad-accum-split", default=1, type=int)
     parser.add_argument("--testing", action="store_true", default=False, help="Run 1 training and 1 validation step to run through entire training process for debugging")
     parser.add_argument("--teacher", default=None, type=Path, help="path to teacher weights for knowledge distillation")
