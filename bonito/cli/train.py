@@ -11,6 +11,7 @@ from pathlib import Path
 from importlib import import_module
 from tokenize import String
 
+from bonito.cli.view import print_model
 from bonito.data import load_numpy, load_script
 from bonito.util import __models__, default_config, default_data
 from bonito.util import load_model, load_symbol, init, half_supported
@@ -70,18 +71,24 @@ def main(args):
     os.makedirs(workdir, exist_ok=True)
     toml.dump({**config, **argsdict}, open(os.path.join(workdir, 'config.toml'), 'w'))
 
-    print("[loading model]")
-    if args.pretrained:
-        print("[using pretrained model {}]".format(args.pretrained))
-        model = load_model(args.pretrained, device, half=False)
-    else:
-        model = load_symbol(config, 'Model')(config)
 
     kd = False
+    model = None
     if args.teacher is not None:
         kd = True
         print(f"[loading teacher model {args.teacher}]")
         teacher_model = load_model(args.teacher, device, half=False)
+        # Load weights into student model too
+        print(f"[loading student model with weights from {args.teacher}]")
+        model = load_model(args.teacher, device, config=config, half=False)
+    
+    if model is None:
+        print("[loading model]")
+        if args.pretrained:
+            print("[using pretrained model {}]".format(args.pretrained))
+            model = load_model(args.pretrained, device, half=False)
+        else:
+            model = load_symbol(config, 'Model')(config)
 
     if config.get("lr_scheduler"):
         sched_config = config["lr_scheduler"]

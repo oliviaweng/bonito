@@ -251,7 +251,7 @@ def match_names(state_dict, model):
     return OrderedDict([(k, remap[k]) for k in state_dict.keys()])
 
 
-def load_model(dirname, device, weights=None, half=None, chunksize=None, batchsize=None, overlap=None, quantize=False, use_koi=False):
+def load_model(dirname, device, config=None, weights=None, half=None, chunksize=None, batchsize=None, overlap=None, quantize=False, use_koi=False):
     """
     Load a model from disk
     """
@@ -265,7 +265,7 @@ def load_model(dirname, device, weights=None, half=None, chunksize=None, batchsi
         weights = max([int(re.sub(".*_([0-9]+).tar", "\\1", w)) for w in weight_files])
 
     device = torch.device(device)
-    config = toml.load(os.path.join(dirname, 'config.toml'))
+    config = config if config is not None else toml.load(os.path.join(dirname, 'config.toml'))
     weights = os.path.join(dirname, 'weights_%s.tar' % weights)
 
     basecall_params = config.get("basecaller", {})
