@@ -441,7 +441,8 @@ class TrainerKD:
             try:
                 with bonito.io.CSVLogger(os.path.join(workdir, 'losses_{}.csv'.format(epoch))) as loss_log:
                     if self.modifier and self.modifier(self.student, epoch):
-                        print_model(self.student, next(iter(self.train_loader))[0].shape)
+                        print('modified!')
+                        # print_model(self.student, next(iter(self.train_loader))[0].shape)
                     
                     train_loss, duration = self.train_one_epoch(loss_log, lr_scheduler, testing)
 
@@ -450,7 +451,6 @@ class TrainerKD:
                 if epoch % self.save_optim_every == 0:
                     torch.save(self.optimizer.state_dict(), os.path.join(workdir, "optim_%s.tar" % epoch))
 
-                # TODO: Temporarily store teacher mean for testing correct weight loading
                 val_student_loss, val_kd_loss, val_student_mean, val_student_median, val_teacher_mean, val_teacher_median = self.validate_one_epoch(testing)
             except KeyboardInterrupt:
                 break

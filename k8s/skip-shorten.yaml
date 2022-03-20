@@ -15,7 +15,7 @@ spec:
             git pull;
             source venv3/bin/activate;
             ./scripts/dynamic-skip-shorten-train.sh
-            |& tee /dna-volume/training-logs/dynamic-skip-shorten-1.log
+            |& tee /dna-volume/training-logs/dynamic-skip-shorten-pretrained-student.log
         volumeMounts:
         - mountPath: /dna-volume
           name: dna-volume

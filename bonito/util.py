@@ -240,6 +240,10 @@ def load_symbol(config, symbol):
 
 
 def match_names(state_dict, model):
+    # TODO: Start here: Remove from the loaded state_dict the keys that don't
+    # appear in the model's state_dict. This is so that we can load the teacher weights
+    # into a student model with a different topology. The student will have fewer
+    # skip connections, so don't need to load weights from the projected residuals. 
     keys_and_shapes = lambda state_dict: zip(*[
         (k, s) for s, i, k in sorted([(v.shape, i, k)
         for i, (k, v) in enumerate(state_dict.items())])
