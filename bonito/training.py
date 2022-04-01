@@ -10,7 +10,7 @@ from time import perf_counter
 from collections import OrderedDict
 from datetime import datetime
 from bonito.cli.view import print_model
-from bonito.ctc.model import update_skip_removal, update_skip_removal_every2epochs, update_skip_shorten
+from bonito.ctc.model import update_skip_removal, update_skip_shorten
 
 from bonito.schedule import linear_warmup_cosine_decay
 from bonito.util import accuracy, decode_ref, permute, concat, match_names
