@@ -10,7 +10,7 @@ from time import perf_counter
 from collections import OrderedDict
 from datetime import datetime
 from bonito.cli.view import print_model
-from bonito.ctc.model import update_skip_removal, update_skip_shorten
+from bonito.ctc.model import update_skip_removal, update_skip_removal_every2epochs, update_skip_shorten
 
 from bonito.schedule import linear_warmup_cosine_decay
 from bonito.util import accuracy, decode_ref, permute, concat, match_names
@@ -244,7 +244,7 @@ class TrainerKD:
     wherein a student model learns from the teacher model's output
     """
     def __init__(
-        self, teacher, student, device, train_loader, valid_loader, modifier=None,
+        self, teacher, student, device, train_loader, valid_loader, modifier=None, modifier_how_often=None,
         criterion=None, use_amp=True, lr_scheduler_fn=None, restore_optim=False,
         save_optim_every=1, grad_accum_split=1, 
         mse_loss_weight=0.35, student_loss_weight=0.65
@@ -256,6 +256,7 @@ class TrainerKD:
         train_loader: Training data DataLoader
         valid_loader: Validation data DataLoader
         modifier: Model modification function
+        modifier_how_often: How often (in terms of epochs) to apply modifier function
         """
         self.teacher = teacher.to(device)
         self.student = student.to(device)
@@ -267,6 +268,7 @@ class TrainerKD:
             'shorten': update_skip_shorten,
         }
         self.modifier = modifiers.get(modifier, None)
+        self.modifier_how_often = modifier_how_often
         # Both teacher and student models use ctc label smoothing loss defined in ctc.model 
         self.criterion = criterion or student.loss  
         self.use_amp = use_amp
@@ -440,7 +442,7 @@ class TrainerKD:
         for epoch in range(1 + last_epoch, epochs + 1 + last_epoch):
             try:
                 with bonito.io.CSVLogger(os.path.join(workdir, 'losses_{}.csv'.format(epoch))) as loss_log:
-                    if self.modifier and self.modifier(self.student, epoch):
+                    if self.modifier and self.modifier(self.student, self.modifier_how_often, epoch):
                         print('modified!')
                         # print_model(self.student, next(iter(self.train_loader))[0].shape)
                     

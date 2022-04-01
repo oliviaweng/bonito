@@ -348,10 +348,10 @@ class Decoder(Module):
 
 
 # Model modifier functions
-def update_skip_removal(model, epoch):
+def update_skip_removal(model, how_often, epoch):
     """
     Remove skip connection every epoch, starting from the head of the network.
-    At epoch i, skip connection i is removed.
+    At epoch i, skip connection (i // how_often + 1) is removed. Note epochs and skip connections are 1-indexed.
 
     Returns True if model modified; otherwise, False
 
@@ -361,19 +361,21 @@ def update_skip_removal(model, epoch):
     # In the CTC QuartzNet model, the residual layers are layers [1, 2, 3, 4, 5],
     # which is 1-indexed. Epochs are also 1-indexed. This code is model-specific
     # and thus hacky.
-    if epoch in model.encoder.residual_layers:
-        print(f'\n\nupdate skip removal at epoch {epoch}')
-        assert model.encoder.encoder[epoch].use_res
-        model.encoder.encoder[epoch].use_res = False
+    skip_to_remove = epoch // how_often + 1
+    if skip_to_remove in model.encoder.residual_layers:
+        print(f'\n\nskip {skip_to_remove} REMOVED at epoch {epoch}')
+        assert model.encoder.encoder[skip_to_remove].use_res
+        model.encoder.encoder[skip_to_remove].use_res = False
         return True
 
     return False
 
 
-def update_skip_shorten(model, epoch):
+def update_skip_shorten(model, how_often, epoch):
     """
     Shorten skip connection every epoch, starting from the head of the network.
-    At epoch i, skip connection i is shortened into smaller skips.
+    At epoch i, skip connection (i // how_often + 1) is shortened into smaller skips.
+    Note epochs and skip connections are 1-indexed.
 
     Returns True if model modified; otherwise, False
 
@@ -383,10 +385,12 @@ def update_skip_shorten(model, epoch):
     # In the CTC QuartzNet model, the residual layers are layers [1, 2, 3, 4, 5],
     # which is 1-indexed. Epochs are also 1-indexed. This code is model-specific
     # and thus hacky.
-    if epoch in model.encoder.residual_layers:
-        print(f'\n\nupdate skip shorten at epoch {epoch}')
-        assert model.encoder.encoder[epoch].use_default_res
-        model.encoder.encoder[epoch].use_default_res = False
+    skip_to_shorten = epoch // how_often + 1
+    if skip_to_shorten in model.encoder.residual_layers:
+        print(f'\n\nskip {skip_to_shorten} shortened at epoch {epoch}')
+        assert model.encoder.encoder[skip_to_shorten].use_default_res
+        model.encoder.encoder[skip_to_shorten].use_default_res = False
         return True
 
     return False
+

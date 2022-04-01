@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dna-kd-remove
+  name: dna-remove10epochs
 spec:
   template:
     spec:
@@ -14,11 +14,11 @@ spec:
             cd /dna-volume/bonito;
             git pull;
             source venv3/bin/activate;
-            ./scripts/kd-skip-remove-train.sh
-            |& tee /dna-volume/training-logs/kd-skip-remove-pretrained-student.log
+            ./scripts/dyn-skip-remove-10epochs.sh
+            |& tee /dna-volume/training-logs/dyn-skip-remove-pretrained-student-10epochs.log
         volumeMounts:
         - mountPath: /dna-volume
-          name: dna-volume
+          name: big-dna-volume
         resources:
           limits:
             memory: 56Gi
@@ -29,9 +29,9 @@ spec:
             cpu: "1"
             nvidia.com/gpu: "1"    
       volumes:
-        - name: dna-volume
+        - name: big-dna-volume
           persistentVolumeClaim:
-            claimName: dna-volume
+            claimName: big-dna-volume
       restartPolicy: Never
       affinity:
         nodeAffinity:

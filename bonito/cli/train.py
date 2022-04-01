@@ -151,4 +151,5 @@ def argparser():
     parser.add_argument("--testing", action="store_true", default=False, help="Run 1 training and 1 validation step to run through entire training process for debugging")
     parser.add_argument("--teacher", default=None, type=Path, help="path to teacher weights for knowledge distillation")
     parser.add_argument("--modifier", default=None, choices=['remove', 'shorten'], help="Select which model modifier algorithm to use")
+    parser.add_argument("--modifier-freq", default=1, type=int, help="How frequently to apply modifier function in terms of epochs, e.g., freq of 2 means remove every 2 epochs")
     return parser
