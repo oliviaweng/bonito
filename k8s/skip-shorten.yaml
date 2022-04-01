@@ -18,7 +18,7 @@ spec:
             |& tee /dna-volume/training-logs/dynamic-skip-shorten-pretrained-student.log
         volumeMounts:
         - mountPath: /dna-volume
-          name: dna-volume
+          name: big-dna-volume
         resources:
           limits:
             memory: 56Gi
@@ -29,9 +29,9 @@ spec:
             cpu: "1"
             nvidia.com/gpu: "1"    
       volumes:
-        - name: dna-volume
+        - name: big-dna-volume
           persistentVolumeClaim:
-            claimName: dna-volume
+            claimName: big-dna-volume
       restartPolicy: Never
       affinity:
         nodeAffinity:

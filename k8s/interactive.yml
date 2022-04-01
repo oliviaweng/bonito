@@ -10,13 +10,15 @@ spec:
     command: ["sleep", "infinity"]
     volumeMounts:
     - mountPath: /dna-volume
-      name: dna-volume
+      name: big-dna-volume
     resources:
       limits:
-        cpu: 1
+        cpu: 2
+        memory: 12Gi
       requests:
-        cpu: 1
+        cpu: 2
+        memory: 12Gi
   volumes:
-    - name: dna-volume
+    - name: big-dna-volume
       persistentVolumeClaim:
-        claimName: dna-volume
+        claimName: big-dna-volume
