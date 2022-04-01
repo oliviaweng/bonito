@@ -6,15 +6,16 @@ spec:
   containers:
   - name: int-container
     image: gitlab-registry.nrp-nautilus.io/prp/jupyter-stack/prp
+    # image: centos:centos7
     command: ["sleep", "infinity"]
     volumeMounts:
     - mountPath: /dna-volume
       name: dna-volume
     resources:
       limits:
-        nvidia.com/gpu: 0
+        cpu: 1
       requests:
-        nvidia.com/gpu: "0" 
+        cpu: 1
   volumes:
     - name: dna-volume
       persistentVolumeClaim:

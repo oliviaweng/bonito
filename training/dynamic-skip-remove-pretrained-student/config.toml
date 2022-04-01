@@ -1,0 +1,115 @@
+[[block]]
+filters = 256
+repeat = 1
+kernel = [ 33,]
+stride = [ 3,]
+dilation = [ 1,]
+dropout = 0.0
+residual = false
+separable = false
+
+[[block]]
+filters = 256
+repeat = 5
+kernel = [ 33,]
+stride = [ 1,]
+dilation = [ 1,]
+dropout = 0.0
+residual = true
+separable = true
+
+[[block]]
+filters = 256
+repeat = 5
+kernel = [ 39,]
+stride = [ 1,]
+dilation = [ 1,]
+dropout = 0.0
+residual = true
+separable = true
+
+[[block]]
+filters = 512
+repeat = 5
+kernel = [ 51,]
+stride = [ 1,]
+dilation = [ 1,]
+dropout = 0.0
+residual = true
+separable = true
+
+[[block]]
+filters = 512
+repeat = 5
+kernel = [ 63,]
+stride = [ 1,]
+dilation = [ 1,]
+dropout = 0.0
+residual = true
+separable = true
+
+[[block]]
+filters = 512
+repeat = 5
+kernel = [ 75,]
+stride = [ 1,]
+dilation = [ 1,]
+dropout = 0.0
+residual = true
+separable = true
+
+[[block]]
+filters = 512
+repeat = 1
+kernel = [ 87,]
+stride = [ 1,]
+dilation = [ 1,]
+dropout = 0.0
+residual = false
+separable = true
+
+[[block]]
+filters = 1024
+repeat = 1
+kernel = [ 1,]
+stride = [ 1,]
+dilation = [ 1,]
+dropout = 0.0
+residual = false
+separable = false
+
+[model]
+package = "bonito.ctc"
+
+[labels]
+labels = [ "N", "A", "C", "G", "T",]
+
+[input]
+features = 1
+
+[encoder]
+activation = "relu"
+
+[training]
+command = "train"
+training_directory = "./training/dynamic-skip-remove-pretrained-student"
+config = "./bonito/models/configs/dna_r9.4.1@v1.toml"
+pretrained = ""
+directory = "PosixPath('bonito/data/dna_r9.4.1')"
+device = "cuda"
+lr = "2e-3"
+seed = 25
+epochs = 5
+batch = 16
+chunks = 0
+valid_chunks = 0
+no_amp = true
+force = true
+restore_optim = false
+nondeterministic = false
+save_optim_every = 1
+grad_accum_split = 1
+testing = false
+teacher = "PosixPath('training/baseline')"
+modifier = "remove"
+func = "<function main at 0x7f91b0457af0>"
