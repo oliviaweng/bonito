@@ -386,7 +386,7 @@ def update_skip_shorten(model, how_often, epoch):
     # which is 1-indexed. Epochs are also 1-indexed. This code is model-specific
     # and thus hacky.
     skip_to_shorten = epoch if how_often == 1 else epoch // how_often + 1
-    if skip_to_shorten in model.encoder.residual_layers:
+    if (epoch - 1) % how_often == 0 and skip_to_shorten in model.encoder.residual_layers:
         print(f'\n\nskip {skip_to_shorten} shortened at epoch {epoch}')
         assert model.encoder.encoder[skip_to_shorten].use_default_res
         model.encoder.encoder[skip_to_shorten].use_default_res = False
