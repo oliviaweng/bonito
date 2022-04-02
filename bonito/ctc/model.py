@@ -361,8 +361,8 @@ def update_skip_removal(model, how_often, epoch):
     # In the CTC QuartzNet model, the residual layers are layers [1, 2, 3, 4, 5],
     # which is 1-indexed. Epochs are also 1-indexed. This code is model-specific
     # and thus hacky.
-    skip_to_remove = epoch // how_often + 1
-    if skip_to_remove in model.encoder.residual_layers:
+    skip_to_remove = epoch if how_often == 1 else epoch // how_often + 1
+    if (epoch - 1) % how_often == 0 and skip_to_remove in model.encoder.residual_layers:
         print(f'\n\nskip {skip_to_remove} REMOVED at epoch {epoch}')
         assert model.encoder.encoder[skip_to_remove].use_res
         model.encoder.encoder[skip_to_remove].use_res = False
@@ -385,7 +385,7 @@ def update_skip_shorten(model, how_often, epoch):
     # In the CTC QuartzNet model, the residual layers are layers [1, 2, 3, 4, 5],
     # which is 1-indexed. Epochs are also 1-indexed. This code is model-specific
     # and thus hacky.
-    skip_to_shorten = epoch // how_often + 1
+    skip_to_shorten = epoch if how_often == 1 else epoch // how_often + 1
     if skip_to_shorten in model.encoder.residual_layers:
         print(f'\n\nskip {skip_to_shorten} shortened at epoch {epoch}')
         assert model.encoder.encoder[skip_to_shorten].use_default_res
