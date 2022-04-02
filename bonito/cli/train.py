@@ -103,6 +103,7 @@ def main(args):
             teacher_model, model, 
             device, train_loader, valid_loader,
             modifier=args.modifier,
+            modifier_how_often=args.modifier_freq,
             use_amp=half_supported() and not args.no_amp,
             lr_scheduler_fn=lr_scheduler_fn,
             restore_optim=args.restore_optim,
