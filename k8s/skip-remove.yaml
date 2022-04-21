@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: dna-remove-10epochs
+  name: dna-remove-every2
 spec:
   template:
     spec:
@@ -14,8 +14,8 @@ spec:
             cd /dna-volume/bonito;
             git pull;
             source venv3/bin/activate;
-            ./scripts/dyn-skip-remove-10epochs.sh
-            |& tee /dna-volume/training-logs/dyn-skip-remove-pretrained-student-10epochs.log
+            ./scripts/dyn-skip-remove-every2.sh
+            |& tee /dna-volume/training-logs/dyn-skip-remove-pretrained-student-every2epochs.log
         volumeMounts:
         - mountPath: /dna-volume
           name: big-dna-volume
